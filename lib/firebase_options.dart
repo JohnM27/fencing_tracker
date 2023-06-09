@@ -49,6 +49,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '438715667872',
     projectId: 'fencing-tracker',
     authDomain: 'fencing-tracker.firebaseapp.com',
+    databaseURL:
+        'https://fencing-tracker-default-rtdb.europe-west1.firebasedatabase.app/', //'https://fencing-tracker.firebaseio.com',
     storageBucket: 'fencing-tracker.appspot.com',
   );
 
@@ -66,7 +68,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '438715667872',
     projectId: 'fencing-tracker',
     storageBucket: 'fencing-tracker.appspot.com',
-    iosClientId: '438715667872-ri9tae1qh4qarfrdmtt8dibd3hcppvmo.apps.googleusercontent.com',
+    iosClientId:
+        '438715667872-ri9tae1qh4qarfrdmtt8dibd3hcppvmo.apps.googleusercontent.com',
     iosBundleId: 'com.example.fencingTracker',
   );
 
@@ -76,7 +79,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '438715667872',
     projectId: 'fencing-tracker',
     storageBucket: 'fencing-tracker.appspot.com',
-    iosClientId: '438715667872-vm7pbsd9ffs4imn6b7hu7ls8toco3u0k.apps.googleusercontent.com',
+    iosClientId:
+        '438715667872-vm7pbsd9ffs4imn6b7hu7ls8toco3u0k.apps.googleusercontent.com',
     iosBundleId: 'com.example.fencingTracker.RunnerTests',
   );
 }

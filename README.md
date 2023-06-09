@@ -31,9 +31,3 @@ User:
 - List practices
 - Current practice
 - Stats
-
-## Isar database
-
-Add `part 'class_name.g.dart'` to the collection class.
-
-Run `flutter pub run build_runner build` to do the migration (generate the code needed to use the table).

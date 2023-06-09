@@ -1,15 +1,13 @@
-import 'package:fencing_tracker/application/user_service.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-class CreateUserScreen extends StatefulWidget {
-  const CreateUserScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<CreateUserScreen> createState() => _CreateUserScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _CreateUserScreenState extends State<CreateUserScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _clubController = TextEditingController();
 
@@ -21,9 +19,9 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
     // If input is not valid, then do nothing
     if (!isInputValid()) return;
 
-    UserService()
-        .setupUser(_usernameController.text, _clubController.text)
-        .then((_) => context.go('/'));
+    // UserService()
+    //     .setupUser(_usernameController.text, _clubController.text)
+    //     .then((_) => context.go('/'));
   }
 
   @override

@@ -1,0 +1,1 @@
+class LoginFailure implements Exception {}

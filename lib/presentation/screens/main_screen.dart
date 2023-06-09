@@ -41,7 +41,7 @@ class MainScreen extends StatelessWidget {
       body: child,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.deepPurple[100],
+        // backgroundColor: Colors.deepPurple[100],
         currentIndex: currentIndex,
         items: _navItems,
         onTap: (index) {
