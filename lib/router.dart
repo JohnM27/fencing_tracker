@@ -6,13 +6,9 @@ import 'package:fencing_tracker/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-// class MyRouter {
-// final AuthenticationService authenticationService;
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _shellNavigatorKey =
     GlobalKey<NavigatorState>();
-
-// MyRouter(this.authenticationService);
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -20,7 +16,9 @@ final GoRouter router = GoRouter(
   routes: [
     GoRoute(
       path: '/login',
-      builder: (context, state) => LoginScreen(),
+      builder: (context, state) => LoginScreen(
+        code: state.queryParameters['code'],
+      ),
     ),
     ShellRoute(
       navigatorKey: GlobalKey<NavigatorState>(),
@@ -58,7 +56,7 @@ final GoRouter router = GoRouter(
     }
 
     if (authenticationService.status == AuthenticationStatus.unauthenticated) {
-      return '/login';
+      return state.location.split('?')[0] == '/login' ? null : '/login';
     }
 
     if (state.location == '/login') {
@@ -68,4 +66,3 @@ final GoRouter router = GoRouter(
     return null;
   },
 );
-// }

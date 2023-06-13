@@ -6,7 +6,14 @@ import 'package:go_router/go_router.dart';
 class LoginScreen extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
 
-  LoginScreen({super.key});
+  LoginScreen({
+    super.key,
+    code,
+  }) {
+    if (code != null) {
+      _passwordController.text = code;
+    }
+  }
 
   bool isInputValid(String username) {
     return username != "" && _passwordController.text != "";

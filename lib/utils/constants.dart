@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class Constants {
   // DEV
-  static String API_URL = "http://localhost:3000";
+  // static String API_URL = "http://localhost:3000";
   // PROD
-  // final String api_url = "";
+  static String API_URL = "http://johnm.sytes.net:3000";
 
   static int HTTP_GET_VALID_CODE = 200;
   static int HTTP_POST_VALID_CODE = 201;

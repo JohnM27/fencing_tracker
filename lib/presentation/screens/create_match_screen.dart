@@ -1,4 +1,5 @@
 import 'package:fencing_tracker/domain/user.dart';
+import 'package:fencing_tracker/presentation/dialog/select_victory_dialog.dart';
 import 'package:fencing_tracker/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,10 +14,10 @@ class CreateMatchScreen extends StatefulWidget {
 class _CreateMatchScreenState extends State<CreateMatchScreen> {
   User? selectedUser;
   int nbTouches = 5;
-  // final TextEditingController givenTouchesController = TextEditingController();
   int givenTouches = 0;
   int receivedTouches = 0;
   bool? isVictory;
+  // bool? selectedIsVictory;
 
   void updateIsVictory() {
     if (givenTouches == receivedTouches) {
@@ -132,16 +133,23 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      // const Text('Touches données:'),
                       SizedBox(
                         width: double.infinity,
                         child: OutlinedButton(
-                          onPressed: () => setState(() {
-                            givenTouches = nbTouches;
-                            updateIsVictory();
-                          }),
+                          onPressed: receivedTouches == nbTouches &&
+                                  givenTouches == nbTouches - 1
+                              ? null
+                              : () => setState(() {
+                                    if (receivedTouches == nbTouches) {
+                                      givenTouches = nbTouches - 1;
+                                      updateIsVictory();
+                                      return;
+                                    }
+                                    givenTouches = nbTouches;
+                                    updateIsVictory();
+                                  }),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
                             child: Text(
                               'MAX',
                               style: Theme.of(context).textTheme.titleLarge,
@@ -153,14 +161,17 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: OutlinedButton(
-                          onPressed: () => setState(() {
-                            if (givenTouches < nbTouches) {
-                              givenTouches++;
-                            }
-                            updateIsVictory();
-                          }),
+                          onPressed: receivedTouches == nbTouches &&
+                                  givenTouches == nbTouches - 1
+                              ? null
+                              : () => setState(() {
+                                    if (givenTouches < nbTouches) {
+                                      givenTouches++;
+                                    }
+                                    updateIsVictory();
+                                  }),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
                             child: Text(
                               '+1',
                               style: Theme.of(context).textTheme.titleLarge,
@@ -171,7 +182,6 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
                       Text(
                         '$givenTouches',
                         style: GoogleFonts.orbitron(fontSize: 64.0),
-                        // style: const TextStyle(fontSize: 64.0),
                       ),
                       SizedBox(
                         width: double.infinity,
@@ -183,7 +193,7 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
                             updateIsVictory();
                           }),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
                             child: Text(
                               '-1',
                               style: Theme.of(context).textTheme.titleLarge,
@@ -200,7 +210,7 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
                             updateIsVictory();
                           }),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
                             child: Text(
                               'MIN',
                               style: Theme.of(context).textTheme.titleLarge,
@@ -221,12 +231,20 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: OutlinedButton(
-                          onPressed: () => setState(() {
-                            receivedTouches = nbTouches;
-                            updateIsVictory();
-                          }),
+                          onPressed: givenTouches == nbTouches &&
+                                  receivedTouches == nbTouches - 1
+                              ? null
+                              : () => setState(() {
+                                    if (givenTouches == nbTouches) {
+                                      receivedTouches = nbTouches - 1;
+                                      updateIsVictory();
+                                      return;
+                                    }
+                                    receivedTouches = nbTouches;
+                                    updateIsVictory();
+                                  }),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
                             child: Text(
                               'MAX',
                               style: Theme.of(context).textTheme.titleLarge,
@@ -238,14 +256,17 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: OutlinedButton(
-                          onPressed: () => setState(() {
-                            if (receivedTouches < nbTouches) {
-                              receivedTouches++;
-                            }
-                            updateIsVictory();
-                          }),
+                          onPressed: givenTouches == nbTouches &&
+                                  receivedTouches == nbTouches - 1
+                              ? null
+                              : () => setState(() {
+                                    if (receivedTouches < nbTouches) {
+                                      receivedTouches++;
+                                    }
+                                    updateIsVictory();
+                                  }),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
                             child: Text(
                               '+1',
                               style: Theme.of(context).textTheme.titleLarge,
@@ -267,7 +288,7 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
                             updateIsVictory();
                           }),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
                             child: Text(
                               '-1',
                               style: Theme.of(context).textTheme.titleLarge,
@@ -284,7 +305,7 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
                             updateIsVictory();
                           }),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
                             child: Text(
                               'MIN',
                               style: Theme.of(context).textTheme.titleLarge,
@@ -298,23 +319,43 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
               ],
             ),
             const SizedBox(height: 24.0),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                border: Border.all(color: getResultColor()),
+            Material(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: getResultColor()),
                 borderRadius: BorderRadius.circular(50.0),
               ),
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                getResultMsg(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(color: getResultColor()),
+              child: SizedBox(
+                width: double.infinity,
+                child: InkWell(
+                  onTap: givenTouches == receivedTouches
+                      ? () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const SelectVictoryDialog(),
+                          ).then((value) {
+                            if (value != null) {
+                              setState(() {
+                                isVictory = value as bool;
+                              });
+                            }
+                          });
+                        }
+                      : null,
+                  borderRadius: BorderRadius.circular(50.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      getResultMsg(),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(color: getResultColor()),
+                    ),
+                  ),
+                ),
               ),
             ),
-            // const SizedBox(height: 24.0),
             const Spacer(),
             SizedBox(
               width: double.infinity,
