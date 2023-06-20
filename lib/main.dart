@@ -37,6 +37,9 @@ class _MyAppState extends State<MyApp> {
         secondaryContainer: CustomColors.purple,
         primaryContainer: CustomColors.purple,
       ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: CustomColors.purple.withOpacity(0.5),
+      ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: CustomColors.purple.withOpacity(0.5),
       ),

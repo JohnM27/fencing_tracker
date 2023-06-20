@@ -1,3 +1,4 @@
+import 'package:fencing_tracker/application/authentication_service.dart';
 import 'package:fencing_tracker/presentation/components/custom_bottom_navbar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -7,23 +8,23 @@ class MainScreen extends StatelessWidget {
   final List<CustomBottomNavbarItem> _navItems = [
     CustomBottomNavbarItem(
       icon: const Icon(Icons.home),
-      label: 'Home',
+      label: 'Accueil',
       path: '/',
     ),
     CustomBottomNavbarItem(
       icon: const Icon(Icons.add_circle_outline),
-      label: 'Practice',
+      label: 'Entraînement',
       path: '/currentpractice',
     ),
     CustomBottomNavbarItem(
       icon: const Icon(Icons.list),
-      label: 'Lists',
+      label: 'Listes',
       path: '/list',
     ),
     CustomBottomNavbarItem(
-      icon: const Icon(Icons.show_chart),
-      label: 'Stats',
-      path: '/stats',
+      icon: const Icon(Icons.admin_panel_settings),
+      label: 'Admin',
+      path: '/admin',
     ),
   ];
 
@@ -32,20 +33,49 @@ class MainScreen extends StatelessWidget {
     required this.child,
   });
 
+  String? getAppbarTitle(BuildContext context) {
+    AuthenticationService authenticationService =
+        AuthenticationService.fromProvider(context, listen: false);
+    final DateTime currentDate = DateTime.now();
+
+    switch (GoRouter.of(context).location) {
+      case '/':
+        return authenticationService.user.username;
+      case '/currentpractice':
+        return 'Entraînement du ${currentDate.day}/${currentDate.month}/${currentDate.year}';
+
+      case '/currentpractice/creatematch':
+        return 'Nouveau match';
+      default:
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
-    int currentIndex = _navItems
-        .indexWhere((item) => item.path == GoRouter.of(context).location);
+    List<String> routeLocation =
+        GoRouter.of(context).location.substring(1).split('/');
+    int currentIndex =
+        _navItems.indexWhere((item) => item.path == '/${routeLocation.first}');
+
+    String? appbarTitle = getAppbarTitle(context);
 
     return Scaffold(
-      body: child,
+      appBar: appbarTitle == null
+          ? null
+          : AppBar(
+              title: Text(appbarTitle),
+            ),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: child,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        // backgroundColor: Colors.deepPurple[100],
         currentIndex: currentIndex,
         items: _navItems,
         onTap: (index) {
-          if (currentIndex != index) {
+          if (GoRouter.of(context).location != _navItems[index].path) {
             context.go(_navItems[index].path);
           }
         },

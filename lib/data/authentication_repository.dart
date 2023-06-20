@@ -9,10 +9,6 @@ import 'package:http/http.dart' as http;
 class AuthenticationRepository {
   final String url = '${Constants.API_URL}/auth';
   BrowserClient httpClient = BrowserClient()..withCredentials = true;
-  // final Map<String, String> headers = {
-  //   "Access-Control-Allow-Origin": "*",
-  //   "Access-Control-Allow-Credentials": "true"
-  // };
 
   Future<Map<String, dynamic>> login({
     required String username,
@@ -50,6 +46,24 @@ class AuthenticationRepository {
       return jsonDecode(response.body);
     } catch (e) {
       debugPrint(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> register({
+    required String username,
+  }) async {
+    final Uri uri = Uri.parse('$url/register');
+    final Object body = {
+      'username': username,
+      'clubname': 'Lunéville',
+    };
+    try {
+      http.Response response = await httpClient.post(uri, body: body);
+      if (response.statusCode != Constants.HTTP_POST_VALID_CODE) {
+        throw Exception();
+      }
+    } catch (e) {
       rethrow;
     }
   }

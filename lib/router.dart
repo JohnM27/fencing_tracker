@@ -1,8 +1,10 @@
 import 'package:fencing_tracker/application/authentication_service.dart';
+import 'package:fencing_tracker/presentation/screens/admin_screen.dart';
 import 'package:fencing_tracker/presentation/screens/auth/login_screen.dart';
-import 'package:fencing_tracker/presentation/screens/create_match_screen.dart';
 import 'package:fencing_tracker/presentation/screens/home_screen.dart';
 import 'package:fencing_tracker/presentation/screens/main_screen.dart';
+import 'package:fencing_tracker/presentation/screens/practice/create_match_screen.dart';
+import 'package:fencing_tracker/presentation/screens/practice/practice_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,7 +32,13 @@ final GoRouter router = GoRouter(
         ),
         GoRoute(
           path: '/currentpractice',
-          builder: (context, state) => const CreateMatchScreen(),
+          builder: (context, state) => PracticeScreen(),
+          routes: [
+            GoRoute(
+              path: 'creatematch',
+              builder: (context, state) => const CreateMatchScreen(),
+            ),
+          ],
         ),
         GoRoute(
           path: '/list',
@@ -43,6 +51,10 @@ final GoRouter router = GoRouter(
           builder: (context, state) => const Center(
             child: Text('Stats'),
           ),
+        ),
+        GoRoute(
+          path: '/admin',
+          builder: (context, state) => const AdminScreen(),
         ),
       ],
     )
@@ -60,6 +72,11 @@ final GoRouter router = GoRouter(
     }
 
     if (state.location == '/login') {
+      return '/';
+    }
+
+    //ADMIN GUARD
+    if (state.location == '/admin' && authenticationService.user.id != 1) {
       return '/';
     }
 

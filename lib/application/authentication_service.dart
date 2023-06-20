@@ -55,6 +55,18 @@ class AuthenticationService extends ChangeNotifier {
       debugPrint('LoginFailure');
     }
   }
+
+  Future<bool> register({
+    required String username,
+  }) async {
+    try {
+      await authenticationRepository.register(username: username);
+      return true;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
 }
 
 enum AuthenticationStatus {
