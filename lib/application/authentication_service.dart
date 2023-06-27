@@ -9,6 +9,7 @@ class AuthenticationService extends ChangeNotifier {
       AuthenticationRepository();
   late User _user;
   late String _accessToken;
+  bool _userHasPassword = true;
   AuthenticationStatus _status = AuthenticationStatus.unauthenticated;
   bool _tryRefresh = false;
 
@@ -29,6 +30,8 @@ class AuthenticationService extends ChangeNotifier {
 
   bool get tryRefresh => _tryRefresh;
 
+  bool get userHasPassword => _userHasPassword;
+
   Future<void> login({
     required String username,
     required String password,
@@ -38,6 +41,7 @@ class AuthenticationService extends ChangeNotifier {
       password: password,
     );
     _accessToken = json['access_token'];
+    _userHasPassword = json['has_password'];
     _user = User.fromJson(json['user']);
     _status = AuthenticationStatus.authenticated;
     notifyListeners();
@@ -61,6 +65,21 @@ class AuthenticationService extends ChangeNotifier {
   }) async {
     try {
       await authenticationRepository.register(username: username);
+      return true;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> setPassword({
+    required BuildContext context,
+    required String password,
+  }) async {
+    try {
+      await authenticationRepository.setPassword(
+          context: context, password: password);
+      _userHasPassword = true;
       return true;
     } catch (e) {
       debugPrint(e.toString());

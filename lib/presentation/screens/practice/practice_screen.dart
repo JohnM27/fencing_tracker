@@ -37,7 +37,10 @@ class PracticeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: MatchService().getUserMatches(context: context),
+        future: MatchService().getUserMatches(
+          context: context,
+          date: DateTime.now(),
+        ),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return const Center(child: CircularProgressIndicator());
@@ -47,100 +50,121 @@ class PracticeScreen extends StatelessWidget {
           int nbVictories = getNbVictories(matches);
           int nbDefeats = getNbDefeats(matches);
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ListView(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Derniers matchs:',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const Spacer(),
-                        OutlinedButton(
-                          onPressed: () => print('voir plus'),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: Text(
-                              'Voir plus',
-                              style: Theme.of(context).textTheme.titleSmall,
+          return Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: matches.isEmpty
+                      ? Text(
+                          'Pas de matchs',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        )
+                      : ListView(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'Derniers matchs:',
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                const Spacer(),
+                                OutlinedButton(
+                                  onPressed: () => context.go(
+                                    '/currentpractice/matchdetail',
+                                    extra: matches,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0),
+                                    child: Text(
+                                      'Voir plus',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
+                            const SizedBox(height: 4.0),
+                            ...List.generate(
+                                matches.length < 5 ? matches.length : 5,
+                                (index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4.0),
+                                child: MatchTile(match: matches[index]),
+                              );
+                            }),
+                            const SizedBox(height: 4.0),
+                            Text(
+                              'Total matchs: ${matches.length}',
+                              textAlign: TextAlign.right,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const SizedBox(height: 8.0),
+                            const Divider(),
+                            const SizedBox(height: 12.0),
+                            Text(
+                              'Victoires / Défaites',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            const SizedBox(height: 8.0),
+                            Row(
+                              children: [
+                                Text(
+                                  '$nbVictories',
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                                const SizedBox(width: 16.0),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      LinearProgressIndicator(
+                                        value: getRatio(
+                                                    matches.length, nbVictories)
+                                                .toDouble() /
+                                            100,
+                                        color: CustomColors.green,
+                                        backgroundColor: CustomColors.red,
+                                      ),
+                                      Text(
+                                        '${getRatio(matches.length, nbVictories)}%',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 16.0),
+                                Text(
+                                  '$nbDefeats',
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                              ],
+                            )
+                          ],
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 4.0),
-                    ...List.generate(matches.length < 5 ? matches.length : 5,
-                        (index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: MatchTile(match: matches[index]),
-                      );
-                    }),
-                    const SizedBox(height: 4.0),
-                    Text(
-                      'Total matchs: ${matches.length}',
-                      textAlign: TextAlign.right,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(height: 8.0),
-                    const Divider(),
-                    const SizedBox(height: 12.0),
-                    Text(
-                      'Victoires / Défaites',
-                      textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24.0),
+                OutlinedButton(
+                  onPressed: () => context.go('/currentpractice/creatematch'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      'Nouveau match'.toUpperCase(),
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    const SizedBox(height: 8.0),
-                    Row(
-                      children: [
-                        Text(
-                          '$nbVictories',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        const SizedBox(width: 16.0),
-                        Expanded(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              LinearProgressIndicator(
-                                value: getRatio(matches.length, nbVictories)
-                                    .toDouble(),
-                                color: CustomColors.green,
-                                backgroundColor: CustomColors.red,
-                              ),
-                              Text(
-                                '${getRatio(matches.length, nbVictories)}%',
-                                style: Theme.of(context).textTheme.titleSmall,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 16.0),
-                        Text(
-                          '$nbDefeats',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24.0),
-              OutlinedButton(
-                onPressed: () => context.go('/currentpractice/creatematch'),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    'Nouveau match'.toUpperCase(),
-                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         });
   }

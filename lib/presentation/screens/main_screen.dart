@@ -17,9 +17,9 @@ class MainScreen extends StatelessWidget {
       path: '/currentpractice',
     ),
     CustomBottomNavbarItem(
-      icon: const Icon(Icons.list),
-      label: 'Listes',
-      path: '/list',
+      icon: const Icon(Icons.history),
+      label: 'Historique',
+      path: '/history',
     ),
     CustomBottomNavbarItem(
       icon: const Icon(Icons.admin_panel_settings),
@@ -66,10 +66,7 @@ class MainScreen extends StatelessWidget {
           : AppBar(
               title: Text(appbarTitle),
             ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: child,
-      ),
+      body: child,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,

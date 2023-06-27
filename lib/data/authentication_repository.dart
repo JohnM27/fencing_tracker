@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:fencing_tracker/application/authentication_service.dart';
 import 'package:fencing_tracker/utils/constants.dart';
 import 'package:fencing_tracker/utils/exception.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +62,30 @@ class AuthenticationRepository {
     };
     try {
       http.Response response = await httpClient.post(uri, body: body);
+      if (response.statusCode != Constants.HTTP_POST_VALID_CODE) {
+        throw Exception();
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> setPassword({
+    required BuildContext context,
+    required String password,
+  }) async {
+    AuthenticationService authenticationService =
+        AuthenticationService.fromProvider(context, listen: false);
+
+    final Uri uri = Uri.parse('$url/setpassword');
+    final Object body = {
+      'password': password,
+    };
+    try {
+      http.Response response = await http.post(uri, body: body, headers: {
+        HttpHeaders.authorizationHeader:
+            'Bearer ${authenticationService.accessToken}'
+      });
       if (response.statusCode != Constants.HTTP_POST_VALID_CODE) {
         throw Exception();
       }

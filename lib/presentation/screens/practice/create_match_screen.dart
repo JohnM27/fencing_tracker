@@ -15,6 +15,7 @@ class CreateMatchScreen extends StatefulWidget {
 }
 
 class _CreateMatchScreenState extends State<CreateMatchScreen> {
+  final TextEditingController nbTouchesController = TextEditingController();
   List<User> userList = List.empty();
   User? selectedUser;
   int nbTouches = 5;
@@ -83,7 +84,8 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
               return const Center(child: CircularProgressIndicator());
             }
             userList = snapshot.data;
-            return Column(
+            return ListView(
+              padding: const EdgeInsets.all(24.0),
               children: [
                 // Username input
                 Autocomplete<User>(
@@ -120,29 +122,97 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
                 const SizedBox(height: 24.0),
                 Wrap(
                   spacing: 8.0,
+                  alignment: WrapAlignment.center,
                   children: [
                     ChoiceChip(
                       label: const Text('5 Touches'),
                       selected: nbTouches == 5,
                       onSelected: (_) {
-                        setState(() => nbTouches = 5);
+                        setState(() {
+                          nbTouchesController.clear();
+                          nbTouches = 5;
+                        });
                       },
                     ),
                     ChoiceChip(
                       label: const Text('15 Touches'),
                       selected: nbTouches == 15,
                       onSelected: (_) {
-                        setState(() => nbTouches = 15);
+                        setState(() {
+                          nbTouchesController.clear();
+                          nbTouches = 15;
+                        });
                       },
                     ),
-                    // TODO: custom nb touches
-                    // ChoiceChip(
-                    //   label: const Text('Autre'),
-                    //   selected: nbTouches == 0,
-                    //   onSelected: (_) {
-                    //     setState(() => nbTouches = 0);
-                    //   },
-                    // ),
+                    ChoiceChip(
+                      label: Text(
+                          'Autre${nbTouches != 5 && nbTouches != 15 ? ': $nbTouches' : ''}'),
+                      selected: nbTouches != 5 && nbTouches != 15,
+                      onSelected: (_) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SimpleDialog(
+                                contentPadding: const EdgeInsets.all(24.0),
+                                children: [
+                                  TextField(
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Nombre de touches',
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    controller: nbTouchesController,
+                                  ),
+                                  const SizedBox(height: 12.0),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: OutlinedButton(
+                                          style: OutlinedButton.styleFrom(
+                                            side: BorderSide(
+                                              color: CustomColors.red,
+                                            ),
+                                          ),
+                                          onPressed: () => context.pop(false),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(
+                                              Icons.close,
+                                              color: CustomColors.red,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 16.0),
+                                      Expanded(
+                                        child: OutlinedButton(
+                                          style: OutlinedButton.styleFrom(
+                                            side: BorderSide(
+                                              color: CustomColors.green,
+                                            ),
+                                          ),
+                                          onPressed: () => context.pop(true),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(
+                                              Icons.done,
+                                              color: CustomColors.green,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            }).then((value) {
+                          if (value) {
+                            setState(() => nbTouches =
+                                int.parse(nbTouchesController.text));
+                          }
+                        });
+                      },
+                    ),
                   ],
                 ),
                 const SizedBox(height: 24.0),
@@ -383,7 +453,7 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
                     ),
                   ),
                 ),
-                const Spacer(),
+                const SizedBox(height: 24.0),
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton(

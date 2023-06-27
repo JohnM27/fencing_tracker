@@ -53,6 +53,7 @@ class _AdminScreenState extends State<AdminScreen> {
           final List<User> userList = snapshot.data;
 
           return ListView(
+            padding: const EdgeInsets.all(24.0),
             children: [
               Text(
                 'Ajouter nouvel utilisateur:',

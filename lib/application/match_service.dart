@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class MatchService {
   final MatchRepository matchRepository = MatchRepository();
 
-  Future<List<dynamic>> getUserMatches({
+  Future<List<UserMatch>> getUserMatches({
     required BuildContext context,
     DateTime? date,
   }) async {

@@ -37,11 +37,6 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String selectedUsername = '';
-    AuthenticationService authenticationService =
-        AuthenticationService.fromProvider(context, listen: true);
-    if (authenticationService.status == AuthenticationStatus.authenticated) {
-      // context.push('/');
-    }
 
     return Scaffold(
       body: Padding(
