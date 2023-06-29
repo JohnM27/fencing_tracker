@@ -34,18 +34,11 @@ User:
 
 ## TO DO
 
-- Chronological order for matches
-- Matches list
-- Password
-
-
-
-## TO-DO NOW 26/06/2023
-
-NOW = 12h30
-
-- NOW-12h45 = Walk doggo
-- 12h45-13h30 = Laundry + Shower
-- 13h30-14h30 = Work
-- 14h30 = Groceries
-- Comeback (around 15h30) = Work
+- DESC Chronological order for matches in current practice 
+(need to inverse order)
+- HOME
+	- Globals stats (monthtly/season)
+		- Top Wins
+		- Top 5-0
+		- Top Win streak
+	- Individual stats (same as above but for current user)

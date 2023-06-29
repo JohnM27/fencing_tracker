@@ -18,7 +18,7 @@ class HistoryScreen extends StatelessWidget {
         ),
         body: const TabBarView(children: [
           HistoryDate(),
-          Text('History by people'),
+          Center(child: Text('TBD: Historique par adversaire')),
         ]),
       ),
     );

@@ -13,6 +13,12 @@ class MatchTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: match.isVictory ? CustomColors.green : CustomColors.red,
+        ),
+        borderRadius: BorderRadius.circular(5),
+      ),
       title: Row(
         children: [
           Text('${match.opponent.username}:'),

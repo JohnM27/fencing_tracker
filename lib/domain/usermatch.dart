@@ -27,4 +27,24 @@ class UserMatch {
         givenTouches = json['userScore']['givenTouches'],
         receivedTouches = json['opponentScore']['givenTouches'],
         isVictory = json['userScore']['isWin'];
+
+  static int getNbVictories(List<UserMatch> matches) {
+    int result = 0;
+    for (var match in matches) {
+      if (match.isVictory) {
+        result++;
+      }
+    }
+    return result;
+  }
+
+  static int getNbDefeats(List<UserMatch> matches) {
+    int result = 0;
+    for (var match in matches) {
+      if (!match.isVictory) {
+        result++;
+      }
+    }
+    return result;
+  }
 }

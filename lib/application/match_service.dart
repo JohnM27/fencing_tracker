@@ -30,6 +30,15 @@ class MatchService {
     }
   }
 
+  Future<List<dynamic>> getTopVictory({required BuildContext context}) async {
+    try {
+      return await matchRepository.getTopVictory(context: context);
+    } catch (e) {
+      debugPrint(e.toString());
+      return List.empty();
+    }
+  }
+
   Future<bool> createMatch({
     required BuildContext context,
     required int nbTouches,

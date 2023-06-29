@@ -84,6 +84,8 @@ class _CreateMatchScreenState extends State<CreateMatchScreen> {
               return const Center(child: CircularProgressIndicator());
             }
             userList = snapshot.data;
+            userList = userList.reversed.toList();
+
             return ListView(
               padding: const EdgeInsets.all(24.0),
               children: [

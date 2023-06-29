@@ -10,26 +10,6 @@ class PracticeScreen extends StatelessWidget {
 
   PracticeScreen({super.key});
 
-  int getNbVictories(List<UserMatch> matches) {
-    int result = 0;
-    for (var match in matches) {
-      if (match.isVictory) {
-        result++;
-      }
-    }
-    return result;
-  }
-
-  int getNbDefeats(List<UserMatch> matches) {
-    int result = 0;
-    for (var match in matches) {
-      if (!match.isVictory) {
-        result++;
-      }
-    }
-    return result;
-  }
-
   int getRatio(int nbMatches, int nbVictories) {
     return ((nbVictories * 100) / nbMatches).round();
   }
@@ -47,8 +27,8 @@ class PracticeScreen extends StatelessWidget {
           }
 
           List<UserMatch> matches = snapshot.data;
-          int nbVictories = getNbVictories(matches);
-          int nbDefeats = getNbDefeats(matches);
+          int nbVictories = UserMatch.getNbVictories(matches);
+          int nbDefeats = UserMatch.getNbDefeats(matches);
 
           return Padding(
             padding: const EdgeInsets.all(24.0),

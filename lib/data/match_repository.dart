@@ -40,6 +40,30 @@ class MatchRepository {
     }
   }
 
+  Future<List<dynamic>> getTopVictory({required BuildContext context}) async {
+    final Uri uri = Uri.parse(
+      '$url/top/victory',
+    );
+    try {
+      http.Response response = await http.get(
+        uri,
+        headers: {
+          HttpHeaders.authorizationHeader:
+              'Bearer ${AuthenticationService.fromProvider(
+            context,
+            listen: false,
+          ).accessToken}'
+        },
+      );
+      if (response.statusCode != Constants.HTTP_GET_VALID_CODE) {
+        throw Exception();
+      }
+      return jsonDecode(response.body);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> createMatch({
     required BuildContext context,
     required int nbTouches,
@@ -50,12 +74,9 @@ class MatchRepository {
   }) async {
     AuthenticationService authenticationService =
         AuthenticationService.fromProvider(context, listen: false);
-    DateTime date = DateTime.now();
 
     final Uri uri = Uri.parse(url);
     final Object body = {
-      'date':
-          '${date.year}-${date.month < 10 ? '0${date.month}' : date.month}-${date.day < 10 ? '0${date.day}' : date.day}',
       'nbTouches': nbTouches,
       'matchType': 'PRACTICE',
       'score': [
