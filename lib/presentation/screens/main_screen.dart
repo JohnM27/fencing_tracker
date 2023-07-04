@@ -17,14 +17,14 @@ class MainScreen extends StatelessWidget {
       path: '/currentpractice',
     ),
     CustomBottomNavbarItem(
+      icon: const Icon(Icons.show_chart),
+      label: 'Stats',
+      path: '/stats',
+    ),
+    CustomBottomNavbarItem(
       icon: const Icon(Icons.history),
       label: 'Historique',
       path: '/history',
-    ),
-    CustomBottomNavbarItem(
-      icon: const Icon(Icons.admin_panel_settings),
-      label: 'Admin',
-      path: '/admin',
     ),
   ];
 
@@ -65,18 +65,26 @@ class MainScreen extends StatelessWidget {
           ? null
           : AppBar(
               title: Text(appbarTitle),
+              actions: [
+                IconButton(
+                  onPressed: () => context.go('/help'),
+                  icon: const Icon(Icons.help_outline),
+                ),
+              ],
             ),
       body: child,
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: currentIndex,
-        items: _navItems,
-        onTap: (index) {
-          if (GoRouter.of(context).location != _navItems[index].path) {
-            context.go(_navItems[index].path);
-          }
-        },
-      ),
+      bottomNavigationBar: currentIndex >= 0 && currentIndex < _navItems.length
+          ? BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              currentIndex: currentIndex,
+              items: _navItems,
+              onTap: (index) {
+                if (GoRouter.of(context).location != _navItems[index].path) {
+                  context.go(_navItems[index].path);
+                }
+              },
+            )
+          : null,
     );
   }
 }

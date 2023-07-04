@@ -40,9 +40,9 @@ class MatchRepository {
     }
   }
 
-  Future<List<dynamic>> getTopVictory({required BuildContext context}) async {
+  Future<List<dynamic>> getCountMatches({required BuildContext context}) async {
     final Uri uri = Uri.parse(
-      '$url/top/victory',
+      '$url/count',
     );
     try {
       http.Response response = await http.get(

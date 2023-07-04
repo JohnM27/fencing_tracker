@@ -1,4 +1,6 @@
-class User {
+import 'package:equatable/equatable.dart';
+
+class User extends Equatable {
   final int id;
   final String username;
   final int clubId;
@@ -16,4 +18,8 @@ class User {
         username = json['username'],
         clubId = json['clubId'],
         code = json['code'];
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [id, username];
 }

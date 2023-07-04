@@ -38,7 +38,6 @@ User:
 (need to inverse order)
 - HOME
 	- Globals stats (monthtly/season)
-		- Top Wins
+		- Top Winrate
 		- Top 5-0
-		- Top Win streak
 	- Individual stats (same as above but for current user)

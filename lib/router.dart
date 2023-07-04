@@ -2,19 +2,17 @@ import 'package:fencing_tracker/application/authentication_service.dart';
 import 'package:fencing_tracker/presentation/screens/admin_screen.dart';
 import 'package:fencing_tracker/presentation/screens/auth/login_screen.dart';
 import 'package:fencing_tracker/presentation/screens/auth/password_screen.dart';
+import 'package:fencing_tracker/presentation/screens/help_screen.dart';
+import 'package:fencing_tracker/presentation/screens/history/history_opponent.dart';
 import 'package:fencing_tracker/presentation/screens/history/history_practice.dart';
 import 'package:fencing_tracker/presentation/screens/history/history_screen.dart';
-import 'package:fencing_tracker/presentation/screens/home_screen.dart';
+import 'package:fencing_tracker/presentation/screens/home/home_screen.dart';
 import 'package:fencing_tracker/presentation/screens/main_screen.dart';
 import 'package:fencing_tracker/presentation/screens/practice/create_match_screen.dart';
 import 'package:fencing_tracker/presentation/screens/practice/practice_match_detail.dart';
 import 'package:fencing_tracker/presentation/screens/practice/practice_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> _shellNavigatorKey =
-    GlobalKey<NavigatorState>();
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -35,9 +33,18 @@ final GoRouter router = GoRouter(
       builder: (context, state, child) => MainScreen(child: child),
       routes: [
         GoRoute(
-          path: '/',
-          builder: (context, state) => const HomeScreen(),
-        ),
+            path: '/',
+            builder: (context, state) => const HomeScreen(),
+            routes: [
+              GoRoute(
+                path: 'help',
+                builder: (context, state) => const HelpScreen(),
+              ),
+              GoRoute(
+                path: 'admin',
+                builder: (context, state) => const AdminScreen(),
+              ),
+            ]),
         GoRoute(
           path: '/currentpractice',
           builder: (context, state) => PracticeScreen(),
@@ -54,31 +61,35 @@ final GoRouter router = GoRouter(
           ],
         ),
         GoRoute(
-            path: '/history',
-            builder: (context, state) => const Center(
-                  child: HistoryScreen(),
-                ),
-            routes: [
-              GoRoute(
-                path: 'practice',
-                redirect: (context, state) =>
-                    state.extra == null ? '/history' : null,
-                builder: (context, state) =>
-                    HistoryPracticeScreen(dateObject: state.extra!),
-              ),
-            ]),
+          path: '/history',
+          builder: (context, state) => const Center(
+            child: HistoryScreen(),
+          ),
+          routes: [
+            GoRoute(
+              path: 'practice',
+              redirect: (context, state) =>
+                  state.extra == null ? '/history' : null,
+              builder: (context, state) =>
+                  HistoryPracticeScreen(dateObject: state.extra!),
+            ),
+            GoRoute(
+              path: 'opponent',
+              redirect: (context, state) =>
+                  state.extra == null ? '/history' : null,
+              builder: (context, state) =>
+                  HistoryOpponent(opponentObject: state.extra!),
+            ),
+          ],
+        ),
         GoRoute(
           path: '/stats',
           builder: (context, state) => const Center(
             child: Text('Stats'),
           ),
         ),
-        GoRoute(
-          path: '/admin',
-          builder: (context, state) => const AdminScreen(),
-        ),
       ],
-    )
+    ),
   ],
   redirect: (context, state) async {
     AuthenticationService authenticationService =

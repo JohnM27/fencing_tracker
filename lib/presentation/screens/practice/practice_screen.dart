@@ -27,6 +27,7 @@ class PracticeScreen extends StatelessWidget {
           }
 
           List<UserMatch> matches = snapshot.data;
+          matches = matches.reversed.toList();
           int nbVictories = UserMatch.getNbVictories(matches);
           int nbDefeats = UserMatch.getNbDefeats(matches);
 
