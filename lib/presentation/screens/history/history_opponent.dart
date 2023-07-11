@@ -31,6 +31,15 @@ class HistoryOpponent extends StatelessWidget {
           );
           matches = List.from(matches.reversed);
 
+          if (matches.isEmpty) {
+            return Center(
+              child: Text(
+                'Pas de matchs',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            );
+          }
+
           return ListView(
             padding: const EdgeInsets.all(24.0),
             children: List.generate(matches.length, (index) {

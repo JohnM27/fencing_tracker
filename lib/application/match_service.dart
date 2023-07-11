@@ -30,9 +30,15 @@ class MatchService {
     }
   }
 
-  Future<List<dynamic>> getTopVictory({required BuildContext context}) async {
+  Future<List<dynamic>> getCountMatches({
+    required BuildContext context,
+    required bool monthlyStandings,
+  }) async {
     try {
-      return await matchRepository.getCountMatches(context: context);
+      return await matchRepository.getCountMatches(
+        context: context,
+        monthlyStandings: monthlyStandings,
+      );
     } catch (e) {
       debugPrint(e.toString());
       return List.empty();

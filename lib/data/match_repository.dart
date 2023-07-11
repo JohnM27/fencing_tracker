@@ -40,9 +40,15 @@ class MatchRepository {
     }
   }
 
-  Future<List<dynamic>> getCountMatches({required BuildContext context}) async {
+  Future<List<dynamic>> getCountMatches({
+    required BuildContext context,
+    required bool monthlyStandings,
+  }) async {
     final Uri uri = Uri.parse(
-      '$url/count',
+      '$url/count?${Uri(queryParameters: {
+            'season': '${Utils.getCurrentSeason()}',
+            'month': '${monthlyStandings ? DateTime.now().month : ''}',
+          }).query}',
     );
     try {
       http.Response response = await http.get(
