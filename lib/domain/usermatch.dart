@@ -28,6 +28,16 @@ class UserMatch {
         receivedTouches = json['opponentScore']['givenTouches'],
         isVictory = json['userScore']['isWin'];
 
+  bool isOneTouchDifference() {
+    return isVictory
+        ? receivedTouches == nbTouches - 1
+        : givenTouches == nbTouches - 1;
+  }
+
+  bool isVictoryNoTouchesReceived() {
+    return isVictory && receivedTouches == 0;
+  }
+
   static int getNbVictories(List<UserMatch> matches) {
     int result = 0;
     for (var match in matches) {
@@ -46,5 +56,21 @@ class UserMatch {
       }
     }
     return result;
+  }
+
+  static double getWinrate(List<UserMatch> matches) {
+    int nbVictories = UserMatch.getNbVictories(matches);
+    return (nbVictories * 100) / matches.length;
+  }
+
+  static int getIndice(List<UserMatch> matches) {
+    int givenTouches = 0;
+    int receivedTouches = 0;
+
+    for (var match in matches) {
+      givenTouches += match.givenTouches;
+      receivedTouches += match.receivedTouches;
+    }
+    return givenTouches - receivedTouches;
   }
 }

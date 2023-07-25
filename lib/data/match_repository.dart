@@ -40,6 +40,36 @@ class MatchRepository {
     }
   }
 
+  Future<List<dynamic>> getUserMatchesRange({
+    required BuildContext context,
+    required bool selectOnlyCurrentMonth,
+  }) async {
+    final Uri uri = Uri.parse(
+      '$url/fromUserRange?${Uri(queryParameters: {
+            'season': '${Utils.getCurrentSeason()}',
+            'month': '${selectOnlyCurrentMonth ? DateTime.now().month : ''}',
+          }).query}',
+    );
+    try {
+      http.Response response = await http.get(
+        uri,
+        headers: {
+          HttpHeaders.authorizationHeader:
+              'Bearer ${AuthenticationService.fromProvider(
+            context,
+            listen: false,
+          ).accessToken}'
+        },
+      );
+      if (response.statusCode != Constants.HTTP_GET_VALID_CODE) {
+        throw Exception();
+      }
+      return jsonDecode(response.body);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<List<dynamic>> getCountMatches({
     required BuildContext context,
     required bool monthlyStandings,

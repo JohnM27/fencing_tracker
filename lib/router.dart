@@ -12,6 +12,7 @@ import 'package:fencing_tracker/presentation/screens/practice/create_match_scree
 import 'package:fencing_tracker/presentation/screens/practice/practice_match_detail.dart';
 import 'package:fencing_tracker/presentation/screens/practice/practice_screen.dart';
 import 'package:fencing_tracker/presentation/screens/standings/standings_screen.dart';
+import 'package:fencing_tracker/presentation/screens/stats/stats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -91,9 +92,7 @@ final GoRouter router = GoRouter(
         ),
         GoRoute(
           path: '/stats',
-          builder: (context, state) => const Center(
-            child: Text('Stats'),
-          ),
+          builder: (context, state) => const StatsScreen(),
         ),
       ],
     ),

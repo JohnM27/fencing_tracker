@@ -34,10 +34,10 @@ User:
 
 ## TO DO
 
-- DESC Chronological order for matches in current practice 
-(need to inverse order)
-- HOME
-	- Globals stats (monthtly/season)
-		- Top Winrate
-		- Top 5-0
-	- Individual stats (same as above but for current user)
+- STATS
+	- Ratio V/D
+	- Ratio V/D (Score = NbTouchesMax / NbTouchesMax - 1)
+	- Nb 5-0
+	- Indice
+	- Graph Ratio V/D
+	-

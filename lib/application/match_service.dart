@@ -30,6 +30,32 @@ class MatchService {
     }
   }
 
+  Future<List<UserMatch>> getUserMatchesRange({
+    required BuildContext context,
+    required bool selectOnlyCurrentMonth,
+  }) async {
+    int userId =
+        AuthenticationService.fromProvider(context, listen: false).user.id;
+    try {
+      List<dynamic> matches = await matchRepository.getUserMatchesRange(
+        context: context,
+        selectOnlyCurrentMonth: selectOnlyCurrentMonth,
+      );
+      return matches.map((match) {
+        List<dynamic> scores = match['score'];
+        match['userScore'] =
+            scores.firstWhere((score) => score['userId'] == userId);
+        match['opponentScore'] =
+            scores.firstWhere((score) => score['userId'] != userId);
+        (match as Map<String, dynamic>).remove('score');
+        return UserMatch.fromJson(match);
+      }).toList();
+    } catch (e) {
+      debugPrint(e.toString());
+      return List.empty();
+    }
+  }
+
   Future<List<dynamic>> getCountMatches({
     required BuildContext context,
     required bool monthlyStandings,
