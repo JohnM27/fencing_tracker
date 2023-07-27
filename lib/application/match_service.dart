@@ -32,14 +32,18 @@ class MatchService {
 
   Future<List<UserMatch>> getUserMatchesRange({
     required BuildContext context,
-    required bool selectOnlyCurrentMonth,
+    required bool onlySelectedMonth,
+    required int month,
+    required int season,
   }) async {
     int userId =
         AuthenticationService.fromProvider(context, listen: false).user.id;
     try {
       List<dynamic> matches = await matchRepository.getUserMatchesRange(
         context: context,
-        selectOnlyCurrentMonth: selectOnlyCurrentMonth,
+        onlySelectedMonth: onlySelectedMonth,
+        month: month,
+        season: season,
       );
       return matches.map((match) {
         List<dynamic> scores = match['score'];

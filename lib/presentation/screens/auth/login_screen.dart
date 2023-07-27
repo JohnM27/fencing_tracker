@@ -56,9 +56,15 @@ class LoginScreen extends StatelessWidget {
               final List<String> usernameList = snapshot.data;
 
               return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const SizedBox(height: 64.0),
+                  Image.asset(
+                    "assets/images/escrime_logo.png",
+                    height: 200,
+                  ),
+                  const SizedBox(height: 24.0),
                   Text(
                     'Connexion',
                     textAlign: TextAlign.center,

@@ -42,12 +42,14 @@ class MatchRepository {
 
   Future<List<dynamic>> getUserMatchesRange({
     required BuildContext context,
-    required bool selectOnlyCurrentMonth,
+    required bool onlySelectedMonth,
+    required int month,
+    required int season,
   }) async {
     final Uri uri = Uri.parse(
       '$url/fromUserRange?${Uri(queryParameters: {
             'season': '${Utils.getCurrentSeason()}',
-            'month': '${selectOnlyCurrentMonth ? DateTime.now().month : ''}',
+            'month': '${onlySelectedMonth ? month + 1 : ''}',
           }).query}',
     );
     try {

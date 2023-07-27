@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class Constants {
   // DEV
-  // static String API_URL = "http://localhost:3000";
+  static String API_URL = "http://localhost:3000";
   // PROD
-  static String API_URL = "http://johnm.sytes.net:3000";
+  // static String API_URL = "http://johnm.sytes.net:3000";
 
   static int HTTP_GET_VALID_CODE = 200;
   static int HTTP_POST_VALID_CODE = 201;
@@ -29,5 +29,18 @@ class Utils {
     return currentDate.month > 8
         ? '${currentDate.year}/${currentDate.year + 1}'
         : '${currentDate.year - 1}/${currentDate.year}';
+  }
+
+  static List<String> getListOfSeasons() {
+    int currentSeason = getCurrentSeason();
+    int listLength = currentSeason - 2022;
+
+    List<String> result = [];
+
+    for (var i = 0; i < listLength; i++) {
+      int currentYear = 2022 + i;
+      result.add('$currentYear/${currentYear + 1}');
+    }
+    return result;
   }
 }

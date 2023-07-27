@@ -1,6 +1,5 @@
 import 'package:fencing_tracker/application/authentication_service.dart';
 import 'package:fencing_tracker/presentation/components/custom_bottom_navbar_item.dart';
-import 'package:fencing_tracker/utils/custom_datetime.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -49,7 +48,7 @@ class MainScreen extends StatelessWidget {
         return 'Nouveau match';
 
       case '/stats':
-        return 'Statistiques (${DateTime.now().monthString} ${DateTime.now().year})';
+        return 'Statistiques';
       default:
     }
     return null;

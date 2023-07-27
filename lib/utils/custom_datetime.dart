@@ -1,4 +1,4 @@
-final List<String> _days = [
+final List<String> daysList = [
   'Lundi',
   'Mardi',
   'Mercredi',
@@ -8,7 +8,7 @@ final List<String> _days = [
   'Dimanche',
 ];
 
-final List<String> _months = [
+final List<String> monthsList = [
   'Janvier',
   'Février',
   'Mars',
@@ -24,7 +24,7 @@ final List<String> _months = [
 ];
 
 extension CustomDateTime on DateTime {
-  String get weekdayString => _days[weekday - 1];
+  String get weekdayString => daysList[weekday - 1];
 
-  String get monthString => _months[month - 1];
+  String get monthString => monthsList[month - 1];
 }
