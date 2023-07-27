@@ -53,6 +53,15 @@ class LoginScreen extends StatelessWidget {
                 );
               }
 
+              if (!snapshot.hasData) {
+                return Center(
+                  child: Text(
+                    'Marche pas :(',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                );
+              }
+
               final List<String> usernameList = snapshot.data;
 
               return Column(

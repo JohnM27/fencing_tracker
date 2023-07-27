@@ -39,15 +39,16 @@ class AuthenticationRepository {
   Future<Map<String, dynamic>> refresh() async {
     final Uri uri = Uri.parse('$url/refresh');
     try {
-      http.Response response = await httpClient.post(
-        uri,
-      );
+      http.Response response = await httpClient
+          .post(
+            uri,
+          )
+          .onError((error, stackTrace) => throw LoginFailure());
       if (response.statusCode != Constants.HTTP_POST_VALID_CODE) {
         throw LoginFailure();
       }
       return jsonDecode(response.body);
     } catch (e) {
-      debugPrint(e.toString());
       rethrow;
     }
   }
