@@ -177,7 +177,7 @@ class _StatsChartState extends State<StatsChart> {
           axisNameWidget: Text('Ratio V/D (%)'),
           sideTitles: SideTitles(
             showTitles: true,
-            interval: 10,
+            interval: 20,
             reservedSize: 42,
           ),
         ),

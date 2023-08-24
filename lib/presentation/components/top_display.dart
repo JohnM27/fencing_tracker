@@ -72,41 +72,56 @@ class TopDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
-          title: Row(
-            children: [
-              Text(data.keys.elementAt(0)),
-              const Spacer(),
-              Text('${data[data.keys.elementAt(0)]} $unit'),
-            ],
-          ),
-          tileColor: const Color(0xFFD4AF37).withOpacity(0.75),
-          onTap: () => displayDialog(context, 0),
-        ),
+        data.length > 1
+            ? ListTile(
+                title: Row(
+                  children: [
+                    Text(data.keys.elementAt(0)),
+                    const Spacer(),
+                    Text('${data[data.keys.elementAt(0)]} $unit'),
+                  ],
+                ),
+                tileColor: const Color(0xFFD4AF37).withOpacity(0.75),
+                onTap: () => displayDialog(context, 0),
+              )
+            : ListTile(
+                title: const Text('N/A'),
+                tileColor: CustomColors.purple.withOpacity(0.25),
+              ),
         const SizedBox(height: 8.0),
-        ListTile(
-          title: Row(
-            children: [
-              Text(data.keys.elementAt(1)),
-              const Spacer(),
-              Text('${data[data.keys.elementAt(1)]} $unit'),
-            ],
-          ),
-          tileColor: const Color(0xFFA8A9AD).withOpacity(0.75),
-          onTap: () => displayDialog(context, 1),
-        ),
+        data.length > 2
+            ? ListTile(
+                title: Row(
+                  children: [
+                    Text(data.keys.elementAt(1)),
+                    const Spacer(),
+                    Text('${data[data.keys.elementAt(1)]} $unit'),
+                  ],
+                ),
+                tileColor: const Color(0xFFA8A9AD).withOpacity(0.75),
+                onTap: () => displayDialog(context, 1),
+              )
+            : ListTile(
+                title: const Text('N/A'),
+                tileColor: CustomColors.purple.withOpacity(0.25),
+              ),
         const SizedBox(height: 8.0),
-        ListTile(
-          title: Row(
-            children: [
-              Text(data.keys.elementAt(2)),
-              const Spacer(),
-              Text('${data[data.keys.elementAt(2)]} $unit'),
-            ],
-          ),
-          tileColor: const Color(0xFFAA7042).withOpacity(0.75),
-          onTap: () => displayDialog(context, 2),
-        ),
+        data.length > 3
+            ? ListTile(
+                title: Row(
+                  children: [
+                    Text(data.keys.elementAt(2)),
+                    const Spacer(),
+                    Text('${data[data.keys.elementAt(2)]} $unit'),
+                  ],
+                ),
+                tileColor: const Color(0xFFAA7042).withOpacity(0.75),
+                onTap: () => displayDialog(context, 2),
+              )
+            : ListTile(
+                title: const Text('N/A'),
+                tileColor: CustomColors.purple.withOpacity(0.25),
+              ),
         const SizedBox(height: 8.0),
         Row(
           children: [
